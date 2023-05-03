@@ -2,7 +2,7 @@
   <artifact type="jar" name="Starea:jar">
     <output-path>$PROJECT_DIR$/mods/artifacts/Starea_jar</output-path>
     <root id="archive" name="Starea.jar">
-      <element id="module-output" name="Test" />
+      <element id="module-output" name="Starea" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/20-ea+4/javafx-graphics-20-ea+4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/20-ea+4/javafx-base-20-ea+4-linux.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/20-ea+4/javafx-fxml-20-ea+4-linux.jar" path-in-jar="/" />

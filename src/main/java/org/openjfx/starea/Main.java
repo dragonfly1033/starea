@@ -18,6 +18,8 @@ import javafx.concurrent.Worker;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import java.io.*;
+
 
 public class Main extends Application {
     private Scene scene;
@@ -38,9 +40,14 @@ class Browser extends Region {
     final WebEngine webEngine = browser.getEngine();
 
     public Browser() throws Exception {
-        String RES = "./src/main/resources/org/openjfx/starea/";
+        String RES = "/src/main/resources/org/openjfx/starea/";
         getStyleClass().add("browser");
         String html = Files.readString(Paths.get(RES+"index.html"));
+        String abspath = new File("pom.xml").getAbsolutePath().replace("/pom.xml", "");
+        String linkcss = "<link rel=\"stylesheet\" href=\"file://"+abspath+RES+"style.css\">";
+        String scriptjs = "<script src=\"file://"+abspath+RES+"script.js\"></script>";
+        html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
+        System.out.println(html);
         webEngine.loadContent(html, "text/html");
 
         webEngine.getLoadWorker().stateProperty().addListener(

@@ -4,6 +4,7 @@ module org.openjfx.test {
     requires javafx.web;
     requires org.json;
     requires jdk.jsobject;
+    requires java.net.http;
 
 
     opens org.openjfx.starea to javafx.fxml;

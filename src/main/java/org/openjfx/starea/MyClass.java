@@ -7,7 +7,8 @@ public class MyClass {
     public void doIt(String path) {
 //        System.out.println("toggleShape() being called");
 //        webEngine.executeScript("toggleShape()");
-        System.out.println(path);
+        Backend back = new Backend();
+        System.out.println("Done");
     }
 
     public MyClass(WebEngine we) {
