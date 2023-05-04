@@ -97,7 +97,7 @@ public class Backend {
         String url = "https://api.open-meteo.com/v1/forecast?" +
                 "current_weather=true&" +
                 "daily=apparent_temperature_max,apparent_temperature_min,weathercode&" +
-                "hourly=is_day,temperature_2m,weathercode,apparent_temperature,cloudcover,visibility,precipitation_probability&" +
+                "hourly=is_day,temperature_2m,weathercode,cloudcover,visibility,precipitation_probability&" +
                 "latitude=" + latitude + "&" +
                 "longitude=" + longitude + "&" +
                 "timezone=" + timezone;
@@ -110,7 +110,7 @@ public class Backend {
 
     private static String getIP() throws IOException {
         URL whatismyip = new URL("http://checkip.amazonaws.com");
-        
+
         BufferedReader in = new BufferedReader(new InputStreamReader(
                 whatismyip.openStream()));
         String ip = in.readLine();

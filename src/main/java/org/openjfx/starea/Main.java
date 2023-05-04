@@ -31,9 +31,13 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        //launch(args);
+        String abspath = new File("src").getAbsolutePath();
 
-        var b = new Backend();
+        System.out.println(abspath);
+
+        launch(args);
+
+        //var b = new Backend();
     }
 }
 class Browser extends Region {
@@ -45,14 +49,11 @@ class Browser extends Region {
         String RES = "src/main/resources/org/openjfx/starea/";
         getStyleClass().add("browser");
         String html = Files.readString(Paths.get(RES+"index.html"));
-        String abspath = new File("pom.xml").getAbsolutePath().replace("/pom.xml", "");
-        String linkcss = "<link rel=\"stylesheet\" href=\"file://"+abspath+RES+"style.css\">";
-        String scriptjs = "<script src=\"file://"+abspath+RES+"script.js\"></script>";
+        String abspath = new File("src/main/resources/org/openjfx/starea").getAbsolutePath();
+        String linkcss = "<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
+        String scriptjs = "<script src=\"file://"+abspath+"/script.js\"></script>";
         html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
         System.out.println(html);
-        webEngine.loadContent(html, "text/html");
-
-        System.out.println(webEngine.isJavaScriptEnabled());
 
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
@@ -61,10 +62,16 @@ class Browser extends Region {
                     if (newValue != Worker.State.SUCCEEDED) { return; }
 
                     JSObject window = (JSObject) webEngine.executeScript("window");
+
                     window.setMember("myObject", new MyClass(webEngine));
+
+                    // allow printing from JS
+                    webEngine.executeScript("console.log = function(message) { myObject.log(message); }");
                 }
             }
         );
+
+        webEngine.loadContent(html, "text/html");
         getChildren().add(browser);
     }
 

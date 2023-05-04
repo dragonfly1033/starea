@@ -5,6 +5,5 @@ function changeColour() {
         colour += letters[Math.floor(Math.random() * 16)];
     }
     var box = document.getElementById("box")
-    box.style.backgroundColor = colour
-    window.myObject.doIt(window.location.href);
+    box.style.backgroundColor = colour;
 }
