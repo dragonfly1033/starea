@@ -30,8 +30,10 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args){
-        launch(args);
+    public static void main(String[] args) throws Exception {
+        //launch(args);
+
+        var b = new Backend();
     }
 }
 class Browser extends Region {
@@ -49,6 +51,8 @@ class Browser extends Region {
         html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
         System.out.println(html);
         webEngine.loadContent(html, "text/html");
+
+        System.out.println(webEngine.isJavaScriptEnabled());
 
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {

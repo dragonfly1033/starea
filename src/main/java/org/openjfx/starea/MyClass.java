@@ -4,7 +4,7 @@ import javafx.scene.web.WebEngine;
 
 public class MyClass {
     private WebEngine webEngine;
-    public void doIt(String path) {
+    public void doIt(String path) throws Exception {
 //        System.out.println("toggleShape() being called");
 //        webEngine.executeScript("toggleShape()");
         Backend back = new Backend();
