@@ -110,6 +110,7 @@ public class Backend {
 
     private static String getIP() throws IOException {
         URL whatismyip = new URL("http://checkip.amazonaws.com");
+        
         BufferedReader in = new BufferedReader(new InputStreamReader(
                 whatismyip.openStream()));
         String ip = in.readLine();
