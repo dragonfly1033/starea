@@ -40,7 +40,7 @@ class Browser extends Region {
     final WebEngine webEngine = browser.getEngine();
 
     public Browser() throws Exception {
-        String RES = "/src/main/resources/org/openjfx/starea/";
+        String RES = "src/main/resources/org/openjfx/starea/";
         getStyleClass().add("browser");
         String html = Files.readString(Paths.get(RES+"index.html"));
         String abspath = new File("pom.xml").getAbsolutePath().replace("/pom.xml", "");
