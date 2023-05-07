@@ -6,4 +6,5 @@ function changeColour() {
     }
     var box = document.getElementById("box")
     box.style.backgroundColor = colour;
+    console.log(colour);
 }

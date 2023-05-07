@@ -44,6 +44,7 @@ class Browser extends Region {
 
     final WebView browser = new WebView();
     final WebEngine webEngine = browser.getEngine();
+    MyClass myObject = new MyClass(webEngine);
 
     public Browser() throws Exception {
         String RES = "src/main/resources/org/openjfx/starea/";
@@ -63,7 +64,7 @@ class Browser extends Region {
 
                     JSObject window = (JSObject) webEngine.executeScript("window");
 
-                    window.setMember("myObject", new MyClass(webEngine));
+                    window.setMember("myObject", myObject);
 
                     // allow printing from JS
                     webEngine.executeScript("console.log = function(message) { myObject.log(message); }");
