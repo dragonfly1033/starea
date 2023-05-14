@@ -40,11 +40,13 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        String abspath = new File("src").getAbsolutePath();
+//        String abspath = new File("src").getAbsolutePath();
 
-        launch(args);
+//        System.out.println(abspath);
 
-        //var b = new Backend();
+//        launch(args);
+
+        var b = new Backend();
     }
 }
 class Browser extends Region {

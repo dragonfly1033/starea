@@ -5,7 +5,7 @@ module org.openjfx.test {
     requires org.json;
     requires jdk.jsobject;
     requires java.net.http;
-
+    requires java.desktop;
 
     opens org.openjfx.starea to javafx.fxml;
     exports org.openjfx.starea;
