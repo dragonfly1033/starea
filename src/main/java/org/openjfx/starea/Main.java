@@ -19,6 +19,15 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import java.io.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.util.Calendar;
 
 
 public class Main extends Application {
@@ -54,7 +63,6 @@ class Browser extends Region {
         String linkcss = "<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
         String scriptjs = "<script src=\"file://"+abspath+"/script.js\"></script>";
         html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
-        System.out.println(html);
 
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
