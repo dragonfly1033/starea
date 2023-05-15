@@ -40,10 +40,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        String abspath = new File("src").getAbsolutePath();
-
-        //launch(args);
-
         var b = new Backend();
     }
 }
