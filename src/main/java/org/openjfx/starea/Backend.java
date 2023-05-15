@@ -31,6 +31,8 @@ public class Backend {
     private static double whole_map_top = 85.054167;
     private static double whole_map_right = 179.999856;
     private static double whole_map_left = -180.0;
+    private static double latitude;
+    private static double longitude;
 
     public Backend() throws Exception {
         //String ip = getIP();
@@ -97,18 +99,21 @@ public class Backend {
         else { return "No Description Found"; }
     }
 
-    private static JSONObject getWeatherJSON(String ip) throws Exception{
+    private JSONObject getWeatherJSON(String ip) throws Exception{
         JSONObject ipInfo = curlJSON("http://ip-api.com/json/"+ip);
-        String latitude = ipInfo.get("lat").toString();
-        String longitude = ipInfo.get("lon").toString();
+        String s_latitude = ipInfo.get("lat").toString();
+        String s_longitude = ipInfo.get("lon").toString();
         String timezone = ipInfo.get("timezone").toString();
+
+        latitude = Double.parseDouble(s_latitude);
+        longitude = Double.parseDouble(s_longitude);
 
         String url = "https://api.open-meteo.com/v1/forecast?" +
                 "current_weather=true&" +
                 "daily=apparent_temperature_max,apparent_temperature_min,weathercode&" +
                 "hourly=is_day,temperature_2m,weathercode,cloudcover,visibility,precipitation_probability&" +
-                "latitude=" + latitude + "&" +
-                "longitude=" + longitude + "&" +
+                "latitude=" + s_latitude + "&" +
+                "longitude=" + s_longitude + "&" +
                 "timezone=" + timezone;
         System.out.println(url);
         JSONObject weather = curlJSON(url);
@@ -164,6 +169,30 @@ public class Backend {
         int lightPollution = arrayUShort[coord.getKey() + coord.getValue() * w] & 0xffff;
         return lightPollution;
     }
+
+    private int getScore(int day, int hour, double lat, double lon) throws Exception {
+        if (isDay(day, hour)) { return 0; }
+        double cloudCoverScore = Math.max(1-2*getCloudCover(day, hour), 0.0);
+        double visibility = getVisibility(day, hour)/24140.0;
+        double visibilityScore = (visibility < 0) ? 0 : Math.pow((visibility-0.8)/0.2, 2);
+        double darkness = 1.0 - getLightPollution(lat, lon)/65535.0;
+        double lightPollutionScore = 0.0;
+        if (darkness <= 0.5) { lightPollutionScore = 0.0; }
+        else if (darkness <= 0.8) { lightPollutionScore = darkness * 0.24167 - 0.12083; }
+        else if (darkness <= 0.95) { lightPollutionScore = darkness * 1.13333 - 0.834167; }
+        else if (darkness <= 0.98) { lightPollutionScore = darkness * 10.375 - 9.61375; }
+        else if (darkness <= 0.999) { lightPollutionScore = darkness * 15.65789 - 14.7910; }
+        else if (darkness <= 1.0) { lightPollutionScore = darkness * 148.75 - 147.75; }
+
+        double score = (cloudCoverScore * 1.0 + visibilityScore * 1.0 + lightPollutionScore * 1.0)/3.0;
+        int rating = (int)Math.round(score * 5);
+
+        return rating;
+    }
+
+    private static boolean isDay(int day, int hour) { return false; }
+    private static double getCloudCover(int day, int hour) { return 0.0; }
+    private static double getVisibility(int day, int hour) { return 0.0; }
 }
 
 
