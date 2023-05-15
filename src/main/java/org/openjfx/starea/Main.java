@@ -42,9 +42,9 @@ public class Main extends Application {
     public static void main(String[] args) throws Exception {
         String abspath = new File("src").getAbsolutePath();
 
-        launch(args);
+        //launch(args);
 
-        //var b = new Backend();
+        var b = new Backend();
     }
 }
 class Browser extends Region {
