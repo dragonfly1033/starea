@@ -41,6 +41,8 @@ public class Main extends Application {
 
     public static void main(String[] args) throws Exception {
         var b = new Backend();
+
+        // launch(args);
     }
 }
 class Browser extends Region {
