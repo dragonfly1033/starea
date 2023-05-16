@@ -19,15 +19,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import java.io.*;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
-import java.util.Calendar;
 
 
 public class Main extends Application {
@@ -40,26 +31,25 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        var b = new Backend();
-
-        // launch(args);
+//        var b = new Backend();
+        launch(args);
     }
 }
 class Browser extends Region {
 
     final WebView browser = new WebView();
     final WebEngine webEngine = browser.getEngine();
-    MyClass myObject = new MyClass(webEngine);
+    Remote remote = new Remote(webEngine);
 
     public Browser() throws Exception {
         String RES = "src/main/resources/org/openjfx/starea/";
         getStyleClass().add("browser");
         String html = Files.readString(Paths.get(RES+"index.html"));
         String abspath = new File("src/main/resources/org/openjfx/starea").getAbsolutePath();
-        String linkcss = "<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
-        String scriptjs = "<script src=\"file://"+abspath+"/script.js\"></script>";
+        String linkcss = "\n\t<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
+        String scriptjs = "\n\t<script text=\"text/javascript\" src=\"file://"+abspath+"/script.js\"></script>";
         html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
-
+        System.out.println(html);
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
                 @Override
@@ -68,7 +58,7 @@ class Browser extends Region {
 
                     JSObject window = (JSObject) webEngine.executeScript("window");
 
-                    window.setMember("myObject", myObject);
+                    window.setMember("remote", remote);
 
                     // allow printing from JS
                     webEngine.executeScript("console.log = function(message) { myObject.log(message); }");
