@@ -117,6 +117,51 @@ public class Backend {
 
         return rating;
     }
+
+    private String getWeatherIcon(boolean isDay, int weatherCode)
+    {
+        switch (weatherCode) {
+            case 0:
+            case 1:
+                return isDay ? "wi-day-sunny" : "wi-night-clear";
+            case 2:
+            case 3:
+                return isDay ? "wi-day-sunny-overcast" : "wi-night-alt-partly-cloudy";
+            case 45:
+            case 48:
+                return isDay ? "wi-day-fog" : "wi-night-fog";
+            case 51:
+            case 53:
+            case 61:
+            case 80:
+                return isDay ? "wi-day-sprinkle" : "wi-night-alt-sprinkle";
+            case 56:
+            case 57:
+            case 66:
+            case 67:
+            case 77:
+                return "wi-snowflake-cold";
+            case 63:
+            case 65:
+                return isDay ? "wi-day-rain" : "wi-night-alt-rain";
+            case 71:
+            case 73:
+            case 75:
+            case 85:
+            case 86:
+                return isDay ? "wi-day-snow" : "wi-night-alt-snow";
+            case 81:
+            case 82:
+                return isDay ? "wi-day-showers" : "wi-night-alt-showers";
+            case 95:
+                return isDay ? "wi-day-thunderstorm" : "wi-night-alt-thunderstorm";
+            case 96:
+            case 99:
+                return isDay ? "wi-day-snow-thunderstorm" : "wi-night-alt-snow-thunderstorm";
+            default:
+                return "wi-small-craft-advisory"; // just use this as placeholder, we'll know that something's gone wrong
+        }
+    }
 }
 
 
