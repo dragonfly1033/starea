@@ -1,8 +1,23 @@
-function func1() {
-    window.remote.log("run func1 in js from button");
-    window.remote.func2();
+function setDay(index) {
+    console.log(index)
 }
 
-function func4() {
-    window.remote.log("run func4 in js from html");
+function makeHours() {
+    var info;
+    var icon;
+    for (int i = 0; i < 24; i++) {
+        info = config.weather.hourly[24*config.currentDay + i];
+        icon = window.remote.getWeatherIcon(info.isDay, info.weatherCode);
+        createHourly(i, info.temp, info.cloudCover, info.precipitation, icon);
+    }
+}
+
+function onStart() {
+  window.remote.setDay();
+  config.weather = JSON.parse(window.remote.getWeather());
+}
+
+var config = {
+    weather: {},
+    currentDay: 0
 }

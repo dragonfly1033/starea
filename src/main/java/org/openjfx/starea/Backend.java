@@ -15,17 +15,17 @@ public class Backend {
     private static double whole_map_top = 85.054167;
     private static double whole_map_right = 179.999856;
     private static double whole_map_left = -180.0;
-    private Forecast forecast = new Forecast();
+    public Forecast forecast;
 
     public Backend() throws Exception {
-
+        forecast = new Forecast();
     }
 
-    private static int getDayOfWeekIndex(){
+    public static int getDayOfWeekIndex(){
         return LocalDate.now().getDayOfWeek().getValue() -1;
     }
 
-    private static String[] getDayList(){
+    public static String[] getDayList(){
         int todayIndex = getDayOfWeekIndex();
         String[] days = new String[7];
         days[(7  - todayIndex)%7] = "Mon";
@@ -38,7 +38,7 @@ public class Backend {
         return days;
     }
 
-    private static String interpretWeatherCode(int weatherCode){
+    public static String interpretWeatherCode(int weatherCode){
         if (weatherCode == 0) { return "Clear Sky"; }
         else if (weatherCode == 1) { return "Mainly Clear"; }
         else if (weatherCode == 2) { return "Partly Cloudy"; }
@@ -98,7 +98,7 @@ public class Backend {
         return lightPollution;
     }
 
-    private int getScore(int day, int hour, double lat, double lon) throws Exception {
+    public int getScore(int day, int hour, double lat, double lon) throws Exception {
         if (forecast.isDay(day, hour)) { return 0; }
         double cloudCoverScore = Math.max(1-2*forecast.getCloudCover(day, hour), 0.0);
         double visibility = forecast.getVisibility(day, hour)/24140.0;
@@ -118,7 +118,7 @@ public class Backend {
         return rating;
     }
 
-    private String getWeatherIcon(boolean isDay, int weatherCode)
+    public static String getWeatherIcon(boolean isDay, int weatherCode)
     {
         switch (weatherCode) {
             case 0:

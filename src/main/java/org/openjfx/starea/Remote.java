@@ -1,19 +1,34 @@
 package org.openjfx.starea;
 
 import javafx.scene.web.WebEngine;
+import org.json.JSONObject;
 
 public class Remote {
     private WebEngine webEngine;
-    public void func2() {
-        System.out.println("run func2 in java from js");
-        webEngine.executeScript("func3()");
+    private Backend backend;
+
+    public void setDay() {
+        int day = Backend.getDayOfWeekIndex();
+        webEngine.executeScript("setDay("+day+")");
+    }
+
+    public String getWeather() {
+        JSONObject weather = new JSONObject();
+        weather.put("daily", backend.forecast.dailyData);
+        weather.put("hourly", backend.forecast.hourlyData);
+        return weather.toString();
+    }
+
+    public String getWeatherIcon(boolean isDay, int weatherCode) {
+        return Backend.getWeatherIcon(isDay, weatherCode);
     }
 
     public void log(String text) {
         System.out.println(text);
     }
 
-    public Remote(WebEngine we) {
+    public Remote(WebEngine we, Backend be) {
         webEngine = we;
+        backend = be;
     }
 }

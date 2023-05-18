@@ -15,8 +15,8 @@ import java.net.http.HttpResponse;
 
 
 public class Forecast {
-    private HourData hourlyData[];
-    private DayData dailyData[];
+    public JSONObject[] hourlyData;
+    public JSONObject[] dailyData;
     private double latitude;
     private double longitude;
 
@@ -77,13 +77,13 @@ public class Forecast {
         JSONArray apparentTemperatureMaxes = daily.getJSONArray("apparent_temperature_max");
         JSONArray weatherCodes = daily.getJSONArray("weathercode");
 
-        dailyData = new DayData[7];
+        dailyData = new JSONObject[7];
 
         for (int i = 0; i < 7; i++) {
-            DayData data = new DayData();
-            data.apparentTemperatureMin = apparentTemperatureMins.getDouble(i);
-            data.apparentTemperatureMax = apparentTemperatureMaxes.getDouble(i);
-            data.weatherCode = weatherCodes.getInt(i);
+            JSONObject data = new JSONObject();
+            data.put("tempMin", apparentTemperatureMins.getDouble(i));
+            data.put("tempMax", apparentTemperatureMaxes.getDouble(i));
+            data.put("weatherCode", weatherCodes.getInt(i));
             dailyData[i] = data;
         }
     }
@@ -96,16 +96,16 @@ public class Forecast {
         JSONArray isDays = hourly.getJSONArray("is_day");
         JSONArray cloudCovers = hourly.getJSONArray("cloudcover");
 
-        hourlyData = new HourData[168];
+        hourlyData = new JSONObject[168];
 
         for (int i = 0; i < 168; i++) {
-            HourData data = new HourData();
-            data.temperature2m = temperature2ms.getDouble(i);
-            data.weatherCode = weatherCodes.getInt(i);
-            data.visibility = visibilities.getInt(i);
-            data.precipitationProbability = precipitationProbabilities.getInt(i);
-            data.isDay = isDays.getInt(i) == 1;
-            data.cloudCover = cloudCovers.getInt(i);
+            JSONObject data = new JSONObject();
+            data.put("temp", temperature2ms.getDouble(i));
+            data.put("weatherCode", weatherCodes.getInt(i));
+            data.put("visibility", visibilities.getInt(i));
+            data.put("precipitation", precipitationProbabilities.getInt(i));
+            data.put("isDay", isDays.getInt(i) == 1);
+            data.put("cloudCover", cloudCovers.getInt(i));
             hourlyData[i] = data;
         }
     }
@@ -117,15 +117,15 @@ public class Forecast {
     }
 
     public boolean isDay(int day, int hour) throws Exception {
-        return hourlyData[timeToIndex(day, hour)].isDay;
+        return hourlyData[timeToIndex(day, hour)].getBoolean("isDay");
     }
 
     public double getCloudCover(int day, int hour) throws Exception {
-        return hourlyData[timeToIndex(day, hour)].cloudCover;
+        return hourlyData[timeToIndex(day, hour)].getInt("cloudCover");
     }
 
     public double getVisibility(int day, int hour) throws Exception {
-        return hourlyData[timeToIndex(day, hour)].visibility;
+        return hourlyData[timeToIndex(day, hour)].getInt("visibility");
     }
 }
 
