@@ -118,7 +118,7 @@ public class Backend {
         return rating;
     }
 
-    private String getWeatherIcon(boolean isDay, int weatherCode)
+    public static String getWeatherIcon(boolean isDay, int weatherCode)
     {
         switch (weatherCode) {
             case 0:

@@ -19,6 +19,10 @@ public class Remote {
         return weather.toString();
     }
 
+    public String getWeatherIcon(boolean isDay, int weatherCode) {
+        return Backend.getWeatherIcon(isDay, weatherCode);
+    }
+
     public void log(String text) {
         System.out.println(text);
     }
