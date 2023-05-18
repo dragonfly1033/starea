@@ -23,15 +23,17 @@ import java.io.*;
 
 public class Main extends Application {
     private Scene scene;
+    private static Backend backend;
+
     @Override public void start(Stage stage) throws Exception {
         stage.setTitle("Starea");
-        scene = new Scene(new Browser(),750,500, Color.web("#555555"));
+        scene = new Scene(new Browser(backend),750,500, Color.web("#555555"));
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) throws Exception {
-//        var b = new Backend();
+        backend = new Backend();
         launch(args);
     }
 }
@@ -39,9 +41,11 @@ class Browser extends Region {
 
     final WebView browser = new WebView();
     final WebEngine webEngine = browser.getEngine();
-    Remote remote = new Remote(webEngine);
+    private Remote remote;
 
-    public Browser() throws Exception {
+    public Browser(Backend backend) throws Exception {
+        remote = new Remote(webEngine, backend);
+
         String RES = "src/main/resources/org/openjfx/starea/";
         getStyleClass().add("browser");
         String html = Files.readString(Paths.get(RES+"index.html"));
@@ -49,7 +53,7 @@ class Browser extends Region {
         String linkcss = "\n\t<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
         String scriptjs = "\n\t<script text=\"text/javascript\" src=\"file://"+abspath+"/script.js\"></script>";
         html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
-        System.out.println(html);
+//        System.out.println(html);
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
                 @Override
@@ -60,8 +64,8 @@ class Browser extends Region {
 
                     window.setMember("remote", remote);
 
-                    // allow printing from JS
-                    webEngine.executeScript("console.log = function(message) { myObject.log(message); }");
+                    webEngine.executeScript("console.log = function(message) { remote.log(message); }");
+                    webEngine.executeScript("startUp()");
                 }
             }
         );

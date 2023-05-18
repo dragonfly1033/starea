@@ -1,8 +1,13 @@
-function func1() {
-    window.remote.log("run func1 in js from button");
-    window.remote.func2();
+function setDay(index) {
+    console.log(index)
 }
 
-function func4() {
-    window.remote.log("run func4 in js from html");
+function onStart() {
+  window.remote.setDay();
+  config.weather = JSON.parse(window.remote.getWeather());
+  console.log(config.weather.daily[0].tempMax);
+}
+
+var config = {
+    weather: {}
 }
