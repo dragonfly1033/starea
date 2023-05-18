@@ -1,0 +1,122 @@
+body {
+    color: #B0BEC5;
+    font-family: sans-serif;
+}
+
+#hourlyDiv {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    padding: 5px;
+    position: absolute;
+    bottom: 10vh;
+    left: 0vh;
+    width: calc(100% - 15px);
+}
+
+#hourlyDiv::-webkit-scrollbar {
+    display: none;
+}
+
+.hourly {
+    flex: 0 0 auto;
+    border-style: solid;
+    border-color: #B0BEC5;
+    border-width: 1px;
+    border-right: 0px;
+    text-align: center;
+    width: 90px;
+}
+
+.hourly-rightmost {
+    border-right: 1px solid white;
+}
+
+.hourlyTable {
+    width: 100%;
+    font-size: normal;
+    vertical-align: middle;
+}
+
+.hourlyTableNums {
+    text-align: right;
+}
+
+.hourlyTableLabels {
+    font-size: small;
+}
+
+.timeSpan {
+    font-weight: bold;
+}
+
+/* Makes a black SVG white */
+.svgWhite {
+    filter: invert(100%);
+}
+
+
+
+body {
+  background-color: #010130;
+}
+
+.day-group {
+  display: inline-flex;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  flex-flow: space-between;
+  gap: 1px;
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  -ms-transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%);
+}
+
+.day {
+  /* Style of button */
+  height: 10vh;
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+  background: #000099;
+  font-family: Arial, Helvetica, sans-serif;
+  flex: 1;
+}
+
+@media screen and (min-width: 490px) {
+  .day-group {
+    gap: 3px;
+  }
+}
+
+.day-text {
+  /* Align text in button and rotate it */
+  transform: rotate(-90deg);
+  text-align: center;
+  margin-top: 3.8vh;
+  margin-bottom: 3.8vh;
+}
+
+.day:last-child {
+  border-right: none;
+}
+
+.day:hover {
+  background: #e904ca;
+}
+
+.day.selected {
+  box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.6), inset 2px 2px 2px rgba(0, 0, 0, 0.6);
+  font-weight: bold;
+}
+
+footer {
+  margin-top: auto;
+  background: #000000;
+}
