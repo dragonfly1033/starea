@@ -1,17 +1,59 @@
 <!DOCTYPE html>
-<head>
-    <title>Starea</title>
 
-    <script>
-        function func3() {
-            window.remote.log("run func3 in html from java");
-            func4();
-        }
-    </script>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starea</title>
 </head>
+
 <body>
-    <div class="navbar"><span class="title">Starea</span></div>
-    <button onClick="func1()">Click Me!</button>
-    <div id="box"></div>
+
+<div id="hourlyDiv"></div>
+
+<script>
+    var hourly = new HourlyCarousel('hourlyDiv');
+
+    function clearHourly() {
+        hourly.clearHourly();
+    }
+
+    function createHourly(time, temperature, cloudcover, precipitationProb, iconName) {
+        hourly.createHourly(time, temperature, cloudcover, precipitationProb, iconName);
+    }
+
+
+    createHourly(22, 10, 10, 10, 'wi-cloudy');
+    createHourly(23, 9, 20, 10, 'wi-cloudy');
+    createHourly(00, 8, 30, 10, 'wi-rain');
+    createHourly(01, 7, 20, 20, 'wi-rain-wind');
+    hourly.setTempUnit('F');
+    createHourly(2, 8, 10, 20, 'wi-hurricane');
+    createHourly(3, 8, 20, 30, 'wi-hail');
+    createHourly(4, 8, 30, 30, 'wi-fog');
+    createHourly(5, 7, 30, 20, 'wi-earthquake');
+    createHourly(6, 7, 20, 20, 'wi-snow');
+    createHourly(7, 6, 20, 20, 'wi-thunderstorm');
+    createHourly(8, 6, 20, 20, 'wi-fire');
+    createHourly(9, 5, 10, 20, 'wi-flood');
+
+
+</script>
+
 </body>
+
+<footer>
+
+    <div id="day-group" class="day-group">
+        <div class="day selected" onclick="setDay(0)"><div class="day-text">Mon</div></div>
+        <div class="day" onclick="setDay(1)"><div class="day-text">Tue</div></div>
+        <div class="day" onclick="setDay(2)"><div class="day-text">Wed</div></div>
+        <div class="day" onclick="setDay(3)"><div class="day-text">Thu</div></div>
+        <div class="day" onclick="setDay(4)"><div class="day-text">Fri</div></div>
+        <div class="day" onclick="setDay(5)"><div class="day-text">Sat</div></div>
+        <div class="day" onclick="setDay(6)"><div class="day-text">Sun</div></div>
+    </div>
+
+</footer>
+
 </html>
