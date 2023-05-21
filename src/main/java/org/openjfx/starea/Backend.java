@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 public class Backend {
     private static int deg = 10;
+
     private static double whole_map_bottom = -59.995775;
     private static double whole_map_top = 85.054167;
     private static double whole_map_right = 179.999856;
@@ -21,10 +22,19 @@ public class Backend {
         forecast = new Forecast();
     }
 
+    /**
+     *
+     * @return the current day of week index, where 0 is Monday, 1 is Tuesday etc.
+     */
     public static int getDayOfWeekIndex(){
         return LocalDate.now().getDayOfWeek().getValue() -1;
     }
 
+    /**
+     * Creates an array of the days of the week, indexed by days relative to today.
+     * For example, index 0 is today, 1 is tomorrow etc.
+     * @return the days of the week array
+     */
     public static String[] getDayList(){
         int todayIndex = getDayOfWeekIndex();
         String[] days = new String[7];
@@ -38,6 +48,11 @@ public class Backend {
         return days;
     }
 
+    /**
+     * Converts a weather code received from the OpenMeteo API to a human-readable format.
+     * @param weatherCode a weathercode given by the OpenMeteo API
+     * @return the human-readable weather
+     */
     public static String interpretWeatherCode(int weatherCode){
         if (weatherCode == 0) { return "Clear Sky"; }
         else if (weatherCode == 1) { return "Mainly Clear"; }
@@ -70,6 +85,12 @@ public class Backend {
         else { return "No Description Found"; }
     }
 
+    /**
+     * Given a latitude and longitude, gets the image for the light pollution map where that latitude and longitude is located.
+     * @param lat the latitude of the location
+     * @param lon the longitude of the location
+     * @return A pair where the first element is the filename and the second element is the latitude/longitude of the top left corner of the image
+     */
     private static Pair<String, Pair<Integer, Integer>> getImgName(double lat, double lon) {
         int corner_lat = (int)Math.floor((lat - whole_map_bottom)/deg) * deg + (int)Math.floor(whole_map_bottom) + deg + 1;
         int corner_lon = (int)Math.floor((lon - whole_map_left)/deg) * deg + (int)Math.floor(whole_map_left);
@@ -83,6 +104,13 @@ public class Backend {
         return new Pair(x, y);
     }
 
+    /**
+     * Gets the light pollution level at a latitude/longitude, from the light pollution map image.
+     * @param lat the latitude of the location
+     * @param lon the longitude of the location
+     * @return the light pollution level of the location
+     * @throws Exception
+     */
     private static int getLightPollution(double lat, double lon) throws Exception {
         Pair<String, Pair<Integer, Integer>> name = getImgName(lat, lon);
         URL path = Backend.class.getResource("grid/"+name.getKey());
@@ -98,6 +126,15 @@ public class Backend {
         return lightPollution;
     }
 
+    /**
+     * Calculate the stargazing score for a time at a position
+     * @param day the day of the week index (today is 0, tomorrow is 1) of the location
+     * @param hour the hour (00:00 + hour)
+     * @param lat the latitude of the location
+     * @param lon the longitude of the location
+     * @return the stargazing score from 0 to 100
+     * @throws Exception
+     */
     public int getScore(int day, int hour, double lat, double lon) throws Exception {
         if (forecast.isDay(day, hour)) { return 0; }
         double cloudCoverScore = Math.max(1-2*forecast.getCloudCover(day, hour), 0.0);
