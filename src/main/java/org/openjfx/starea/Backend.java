@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferUShort;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.function.Function;
 
 
 public class Backend {
@@ -17,9 +19,15 @@ public class Backend {
     private static double whole_map_right = 179.999856;
     private static double whole_map_left = -180.0;
     public Forecast forecast;
+    private HashMap<String, Integer> lightPolCache = new HashMap<String, Integer>();
 
     public Backend() throws Exception {
         forecast = new Forecast();
+        for (int i = 0; i < 168; i++) {
+            int day = (int)Math.floor(i/24);
+            int hour = i - day*24;
+            forecast.hourlyData[i].put("score", getScore(day, hour, forecast.latitude, forecast.longitude));
+        }
     }
 
     /**
@@ -137,11 +145,19 @@ public class Backend {
      * @throws Exception
      */
     public int getScore(int day, int hour, double lat, double lon) throws Exception {
-        if (forecast.isDay(day, hour)) { return 0; }
-        double cloudCoverScore = Math.max(1-2*forecast.getCloudCover(day, hour), 0.0);
-        double visibility = forecast.getVisibility(day, hour)/24140.0;
+        int index = day * 24 + hour;
+        if (forecast.hourlyData[index].getBoolean("isDay")) { return 0; }
+        double cloudCoverScore = Math.max(1-2*forecast.hourlyData[index].getInt("cloudCover"), 0.0);
+        double visibility = forecast.hourlyData[index].getInt("visibility")/24140.0;
         double visibilityScore = (visibility < 0) ? 0 : Math.pow((visibility-0.8)/0.2, 2);
-        double darkness = 1.0 - getLightPollution(lat, lon)/65535.0;
+
+        double lightPol = lightPolCache.computeIfAbsent(String.valueOf(lat)+"_"+String.valueOf(lon),
+            (x) -> {try {
+                        return getLightPollution(lat, lon);
+                    } catch (Exception e) {
+                        return 0;
+                    }});
+        double darkness = 1.0 - lightPol/65535.0;
         double lightPollutionScore = 0.0;
         if (darkness <= 0.5) { lightPollutionScore = 0.0; }
         else if (darkness <= 0.8) { lightPollutionScore = darkness * 0.24167 - 0.12083; }
@@ -151,8 +167,7 @@ public class Backend {
         else if (darkness <= 1.0) { lightPollutionScore = darkness * 148.75 - 147.75; }
 
         double score = (cloudCoverScore * 1.0 + visibilityScore * 1.0 + lightPollutionScore * 1.0)/3.0;
-        int rating = (int)Math.round(score * 5);
-
+        int rating = (int)Math.min(Math.max(Math.floor(score * 6), 0), 5);
         return rating;
     }
 

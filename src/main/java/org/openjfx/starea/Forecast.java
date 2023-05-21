@@ -17,8 +17,8 @@ import java.net.http.HttpResponse;
 public class Forecast {
     public JSONObject[] hourlyData;
     public JSONObject[] dailyData;
-    private double latitude;
-    private double longitude;
+    public double latitude;
+    public double longitude;
 
     public Forecast() throws Exception {
 //        String ip = getIP();
@@ -108,24 +108,6 @@ public class Forecast {
             data.put("cloudCover", cloudCovers.getInt(i));
             hourlyData[i] = data;
         }
-    }
-
-    private int timeToIndex(int day, int hour) throws Exception{
-        if (day < 0 || day > 6) { throw new Exception("day 0-6 : today-in 6 days"); }
-        if (hour < 0 || hour > 23) { throw new Exception("hour 0-23"); }
-        return 24*day + hour;
-    }
-
-    public boolean isDay(int day, int hour) throws Exception {
-        return hourlyData[timeToIndex(day, hour)].getBoolean("isDay");
-    }
-
-    public double getCloudCover(int day, int hour) throws Exception {
-        return hourlyData[timeToIndex(day, hour)].getInt("cloudCover");
-    }
-
-    public double getVisibility(int day, int hour) throws Exception {
-        return hourlyData[timeToIndex(day, hour)].getInt("visibility");
     }
 }
 

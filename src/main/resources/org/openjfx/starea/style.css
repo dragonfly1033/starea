@@ -11,7 +11,7 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     padding: 5px;
-    width: calc(100% - 15px);
+    width: calc(100%);
     grid-area: hourly;
 }
 
@@ -42,26 +42,25 @@ body {
     vertical-align: middle;
 }
 
-.hourlyTableNums {
-    text-align: right;
-}
-
-.hourlyTableLabels {
-    font-size: small;
-}
-
 .timeSpan {
     font-weight: bold;
-
 }
 
 /* Makes a black SVG white */
 .svgWhite {
     align-self: center;
-    width: 100%;
     height: 100%;
     filter: invert(0.9) sepia(1) saturate(5) hue-rotate(175deg);
 }
+
+.hourlyTableNums {
+    text-align: right;
+}
+
+.scoreSpan {
+  font-weight: bold;
+}
+
 
 
 
@@ -118,10 +117,6 @@ body {
   font-weight: bold;
 }
 
-footer {
-  margin-top: auto;
-  background: #000000;
-}
 
 /* CSS styling for Starea */
 

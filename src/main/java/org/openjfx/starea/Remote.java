@@ -21,6 +21,22 @@ public class Remote {
         return path;
     }
 
+    public int getScore(int day, int hour, double lat, double lon) throws Exception {
+        System.out.print(day);
+        System.out.println(hour);
+        return backend.getScore(day, hour, lat, lon);
+    }
+
+    public int getScoreHere(int day, int hour) throws Exception {
+        System.out.print(day);
+        System.out.println(hour);
+        return backend.getScore(day, hour, backend.forecast.latitude, backend.forecast.longitude);
+    }
+
+    public int getScoreHereNow() throws Exception {
+        return backend.getScore(Backend.getDayOfWeekIndex(), getHour(), backend.forecast.latitude, backend.forecast.longitude);
+    }
+
     public void setPath(String val) {
         path = val;
     }
@@ -39,11 +55,6 @@ public class Remote {
 
     public void log(String text) {
         System.out.println(text);
-    }
-    public void logJSON(JSONObject text) {
-        System.out.println("lanakls");
-        System.out.println(text);
-        System.out.println(text.toString());
     }
 
     public Remote(WebEngine we, Backend be) {
