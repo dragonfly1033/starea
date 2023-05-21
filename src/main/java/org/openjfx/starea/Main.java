@@ -50,8 +50,9 @@ class Browser extends Region {
         getStyleClass().add("browser");
         String html = Files.readString(Paths.get(RES+"index.html"));
         String abspath = new File("src/main/resources/org/openjfx/starea").getAbsolutePath();
-        String linkcss = "\n\t<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
-        String scriptjs = "\n\t<script text=\"text/javascript\" src=\"file://"+abspath+"/script.js\"></script>";
+        remote.setPath("file://"+abspath+"/");
+        String linkcss = "\n\t\t<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
+        String scriptjs = "\n\t\t<script text=\"text/javascript\" src=\"file://"+abspath+"/script.js\"></script>";
         html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
 //        System.out.println(html);
         webEngine.getLoadWorker().stateProperty().addListener(
