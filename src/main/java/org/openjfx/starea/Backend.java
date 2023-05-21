@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferUShort;
 import java.net.URL;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public class Backend {
@@ -22,8 +22,9 @@ public class Backend {
     }
 
     public static int getDayOfWeekIndex(){
-        return LocalDate.now().getDayOfWeek().getValue() -1;
+        return LocalDateTime.now().getDayOfWeek().getValue() -1;
     }
+    public static int getHour(){ return LocalDateTime.now().getHour(); }
 
     public static String[] getDayList(){
         int todayIndex = getDayOfWeekIndex();
