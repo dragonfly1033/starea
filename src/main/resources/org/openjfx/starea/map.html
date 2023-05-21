@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Starea</title>
+        <link rel="stylesheet" href="style-map.css">
+        <script text="text/javascript" src="script-map.js"></script>
+        <script>
+            function startUp() {
+                onStart();
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="grid-container"> <!--The different parts are set out in a grid format-->
+	        <p id="title">Starea    </p>
+			<div class="starometer">
+		        <svg class="starsvg"
+					viewBox="0 0 49 46">
+					<g id="segmentbox">
+						<!-- <path class="segmentf" d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/> -->
+						<path id="segment0" fill="#ddaa00" d="M 25 1 L 31 18 L 25 26.25 L 19 18 Z"/>
+						<path id="segment1" fill="#ddaa00" d="M 25 26.25 L 31 18 H 49 L 35 29 Z"/>
+						<path id="segment2" fill="#ddaa00" d="M 25 26.25 L 35 29 L 40 46 L 25 36 Z"/>
+						<path id="segment3" fill="#ddaa00" d="M 25 26.25 L 25 36 L 10 46 L 15 29 Z"/>
+						<path id="segment4" fill="#ddaa00" d="M 25 26.25 L 15 29 L 1 18 H 19 Z"/>
+					</g>
+				</svg>
+			</div>
+        
+            
+            <div class="home" onclick="gotoHomeScreen()">
+                <svg class="homesvg svgColor" viewBox="0 0 512 512" xml:space="preserve">
+                    <g>
+                        <path d="M498.665,213.084l-51.215-40.182V20.539c0-8.103-5.836-14.67-13.937-14.67h-58.682c-8.101,0-15.404,6.568-15.404,14.67
+                            v83.3l-93.778-73.864c-5.314-4.168-12.605-4.169-17.924-0.003L13.622,213.303C5.141,219.95,0,229.945,0,240.722v17.845
+                            c0,19.212,16.363,34.842,35.576,34.842h23.106v198.052c0,8.102,7.303,14.67,15.404,14.67h365.295
+                            c8.101,0,13.937-6.568,13.937-14.67V293.41h24.573c19.213,0,34.109-15.63,34.109-34.842v-18.07
+                            C512,229.725,507.14,219.733,498.665,213.084z M388.768,35.209h29.341v114.672l-29.341-23.021V35.209z M305.146,476.791h-99.759
+                            V316.883h99.759V476.791z M423.977,476.791h-89.49V302.212c0-8.102-5.102-14.67-13.203-14.67h-129.1
+                            c-8.101,0-16.138,6.568-16.138,14.67v174.579H88.023V266.605l168.188-131.864l167.766,131.627V476.791z M482.659,258.567
+                            c0,3.034-1.736,5.501-4.768,5.501h-24.573v-4.838c0-4.505-1.703-8.761-5.248-11.543L265.819,104.554
+                            c-5.315-4.168-12.697-4.171-18.015-0.003L64.622,247.919c-3.547,2.782-5.94,7.037-5.94,11.546v4.604H35.576
+                            c-3.032,0-6.235-2.468-6.235-5.501v-17.845c0-1.702,1.134-3.279,2.475-4.329L256.773,60.162L480.828,236.17
+                            c1.338,1.049,1.831,2.628,1.831,4.328V258.567z"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="map">
+                <img source="map.jpg" alt="Best Stargazing Location">
+            </div>
+
+            <div class="radslidecontainer">
+                <input type="range" min="1" max="100" value="20" class="radslider" id="myRange">
+                <p class="radius">Radius: <span id="radius"></span>km</p>
+            </div>
+        </div>
+    </body>
+</html>

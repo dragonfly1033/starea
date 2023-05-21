@@ -13,6 +13,16 @@ public class Remote {
         webEngine.executeScript("setDay("+day+")");
     }
 
+    public void gotoMapScreen() {
+        webEngine.loadContent(backend.map_html, "text/html");
+        webEngine.executeScript("startUp()");
+    }
+
+    public void gotoHomeScreen() {
+        webEngine.loadContent(backend.index_html, "text/html");
+        webEngine.executeScript("startUp()");
+    }
+
     public int getHour() {
         return Backend.getHour();
     }

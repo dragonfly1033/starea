@@ -47,14 +47,23 @@ class Browser extends Region {
         remote = new Remote(webEngine, backend);
 
         String RES = "src/main/resources/org/openjfx/starea/";
-        getStyleClass().add("browser");
-        String html = Files.readString(Paths.get(RES+"index.html"));
         String abspath = new File("src/main/resources/org/openjfx/starea").getAbsolutePath();
         remote.setPath("file://"+abspath+"/");
+        getStyleClass().add("browser");
+
+        backend.index_html = Files.readString(Paths.get(RES+"index.html"));
         String linkcss = "\n\t\t<link rel=\"stylesheet\" href=\"file://"+abspath+"/style.css\">";
         String scriptjs = "\n\t\t<script text=\"text/javascript\" src=\"file://"+abspath+"/script.js\"></script>";
-        html = html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
-//        System.out.println(html);
+        backend.index_html = backend.index_html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
+
+        backend.map_html = Files.readString(Paths.get(RES+"map.html"));
+        linkcss = "\n\t\t<link rel=\"stylesheet\" href=\"file://"+abspath+"/style-map.css\">";
+        scriptjs = "\n\t\t<script text=\"text/javascript\" src=\"file://"+abspath+"/script-map.js\"></script>";
+        backend.map_html = backend.map_html.replace("<title>Starea</title>", "<title>Starea</title>"+linkcss+scriptjs);
+
+
+
+        //        System.out.println(html);
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
                 @Override
@@ -71,7 +80,7 @@ class Browser extends Region {
             }
         );
 
-        webEngine.loadContent(html, "text/html");
+        webEngine.loadContent(backend.index_html, "text/html");
         getChildren().add(browser);
     }
 

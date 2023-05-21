@@ -54,6 +54,7 @@ class HourlyCarousel {
         let svg = document.createElement('img');
         svg.setAttribute('src', this.getIconPath(icon));
         svg.classList.add('svgWhite');
+        svg.classList.add('svgColor');
         hourBox.appendChild(svg);
 
         if (this.temp_unit !== 'C') {
@@ -142,7 +143,7 @@ function setTemps(current, min, max) {
 };
 
 function gotoMapScreen() {
-    window.location = config.path + "map.html";
+    window.remote.gotoMapScreen();
 }
 
 function onStart() {

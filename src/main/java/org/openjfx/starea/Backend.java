@@ -19,6 +19,8 @@ public class Backend {
     private static double whole_map_left = -180.0;
     public Forecast forecast;
     private HashMap<String, Integer> lightPolCache = new HashMap<String, Integer>();
+    public String index_html;
+    public String map_html;
 
     public Backend() throws Exception {
         forecast = new Forecast();

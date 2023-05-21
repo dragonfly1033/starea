@@ -1,0 +1,153 @@
+.map {
+  grid-area: map;
+  width: 100%;
+  height: 100%;
+  /* fix height sizing issue with diff phones */
+  text-align: center;
+  color: #B0BEC5;
+}
+
+.map img {
+  height: 100%;
+  max-width: 50vh;
+  max-height: 70vw;
+  aspect-ratio: 1 / 1;
+}
+
+.radslidecontainer {
+    width: 100%; /* Width of the outside container */
+    height: 100%; /* Height of the outside container */
+    grid-area: radius;
+    text-align: center;
+  }
+  
+  /* The slider itself */
+.radslider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #4d4d4d;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin-top: 2vh;
+}
+
+.radslider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #009973;
+  cursor: pointer;
+}
+
+.radslider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.radius {
+    text-align: center;
+    color: #B0BEC5;
+}
+
+/* Style buttons */
+.home {
+  grid-area: home;
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+.homesvg {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+  color: #B0BEC5;
+  font-family: sans-serif;
+  margin: 0;
+  background-color: #010130;
+}
+
+/* Makes a black SVG white */
+.svgWhite {
+  align-self: center;
+  height: 100%;
+}
+
+.svgColor {
+  filter: invert(80%) sepia(15%) saturate(187%) hue-rotate(155deg) brightness(90%) contrast(94%);
+}
+/* CSS styling for Starea */
+
+.grid-container {
+margin: 0;
+display: grid; 
+width: 100%;
+height: 100%;
+grid-auto-columns: max-content; 
+grid-auto-rows: min-content;
+gap: 0vh 0px;
+grid-template-columns: 10vw 40vw 40vw 10vw;
+grid-template-rows: 5vh 15vh 70vh 10vh;
+grid-template-areas: 
+  "title title . home"
+  "star star star star"
+  ". map map ."
+  ". radius radius .";
+}
+
+#title {
+grid-area: title;
+font-size: 40px;
+margin: 0;
+padding-left: 5px;
+}
+
+.starometer {
+grid-area: star;
+padding: 1vh;
+}
+
+.starsvg {
+width: 100%;
+height: 100%;
+}
+
+#temp-grid {
+grid-area: temps;
+display: grid;
+grid-template-rows: 1fr 1fr;
+grid-template-columns: 1fr 1fr;
+column-gap: 0px;
+text-align: center;
+height: 30%;
+margin-top: 10%;
+}
+
+.min {
+font-size: 25px;
+grid-column: 1;
+grid-row: 2;
+border-right-style: solid;
+border-width: thin;
+}
+
+.max {
+font-size: 25px;
+grid-column: 2;
+grid-row: 2;
+}
+
+#mintext,
+#maxtext {
+margin-top: 0;
+}
