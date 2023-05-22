@@ -27,7 +27,6 @@ function onStart() {
 
     document.getElementById("mapDiv").appendChild(imageObj);
 
-    window.remote.log(config.path + "map.png");
 }
 
 function useScore(segs) {
