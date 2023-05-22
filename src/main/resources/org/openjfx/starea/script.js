@@ -162,8 +162,8 @@ function onStart() {
 
 function makePage() {
     makeHours();
-    document.getElementById("minnum").textContent = config.weather.daily[config.currentDay].tempMin;
-    document.getElementById("maxnum").textContent = config.weather.daily[config.currentDay].tempMax;
+    document.getElementById("minnum").textContent = config.weather.daily[config.currentDay].tempMin+" °C";
+    document.getElementById("maxnum").textContent = config.weather.daily[config.currentDay].tempMax+" °C";
      document.getElementById("weathericonimg").setAttribute("src",
        config.path + "icons/" + window.remote.getWeatherIcon(false,
            config.weather.daily[config.currentDay].weatherCode) + ".svg");
