@@ -25,16 +25,24 @@ public class Main extends Application {
     private Scene scene;
     private static Backend backend;
 
+    private static Main main;
+
     @Override public void start(Stage stage) throws Exception {
         stage.setTitle("Starea");
-        scene = new Scene(new Browser(backend),750,500, Color.web("#555555"));
+        scene = new Scene(new Browser(backend),375,667, Color.web("#555555"));
         stage.setScene(scene);
         stage.show();
+        Main.main = this;
     }
 
     public static void main(String[] args) throws Exception {
         backend = new Backend();
         launch(args);
+    }
+
+    public static void showDocument(String url)
+    {
+        main.getHostServices().showDocument(url);
     }
 }
 class Browser extends Region {
@@ -80,7 +88,7 @@ class Browser extends Region {
             }
         );
 
-        webEngine.loadContent(backend.map_html, "text/html");
+        webEngine.loadContent(backend.index_html, "text/html");
         getChildren().add(browser);
     }
 
@@ -97,4 +105,5 @@ class Browser extends Region {
     @Override protected double computePrefHeight(double width) {
         return 500;
     }
+
 }

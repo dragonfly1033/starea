@@ -1,7 +1,13 @@
 package org.openjfx.starea;
 
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
+import netscape.javascript.JSException;
+import netscape.javascript.JSObject;
 import org.json.JSONObject;
+
+
 
 public class Remote {
     private WebEngine webEngine;
@@ -32,8 +38,6 @@ public class Remote {
     }
 
     public int getScore(int day, int hour, double lat, double lon) throws Exception {
-        System.out.print(day);
-        System.out.println(hour);
         return backend.getScoreNew(day, hour, lat, lon);
     }
 
@@ -57,6 +61,23 @@ public class Remote {
         weather.put("hourly", backend.forecast.hourlyData);
         System.out.println(weather);
         return weather.toString();
+    }
+
+    public String getNewBestLocation(int radius) throws Exception {
+        var latlon = Backend.getLowestLightPollution(backend.forecast.latitude, backend.forecast.longitude, radius);
+        int score = getScore(0, 23, latlon.getKey(), latlon.getValue());
+
+        String imgUrl = MapGenerator.generateMapImageURL(600, 600, backend.forecast.latitude, backend.forecast.longitude, latlon.getKey(), latlon.getValue());
+        String hrefUrl = MapGenerator.getMapsURL(latlon.getKey(), latlon.getValue());
+
+        return "{ \"href\": \"" + hrefUrl + "\"," +
+                "\"img\": \"" + imgUrl + "\"," +
+                "\"score\": " + score +
+                "}";
+    }
+
+    public void openBrowserWindow(String url) {
+        Main.showDocument(url);
     }
 
     public String getWeatherIcon(boolean isDay, int weatherCode) {
