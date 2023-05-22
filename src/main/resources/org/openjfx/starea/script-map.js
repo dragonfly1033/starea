@@ -4,6 +4,23 @@ function gotoHomeScreen() {
 }
 
 function createNewLocation(radius)  {
+    return JSON.parse(window.remote.getNewBestLocation(radius));
+}
+
+function showDocument() {
+    if (config.currMapURL !== "") {
+        window.remote.openBrowserWindow(config.currMapURL);
+    }
+}
+
+function updateLocation(radius) {
+    let bestLoc = createNewLocation(radius);
+
+    let imageElm = document.getElementById("mapImg");
+
+    imageElm.setAttribute("src", bestLoc.img);
+    config.currMapURL = bestLoc.href;
+    useScore(bestLoc.score);
 }
 
 function onStart() {
@@ -18,15 +35,14 @@ function onStart() {
     }
 
     slider.onmouseup = function() {
-        createNewLocation(slider.value);
+        updateLocation(slider.value);
     }
 
-    let imageObj = document.createElement("img");
+    updateLocation(slider.value);
 
-    imageObj.setAttribute("src", config.path + "map.png");
-
-    document.getElementById("mapDiv").appendChild(imageObj);
-
+    document.getElementById("mapLink").onclick = function () {
+        showDocument();
+    };
 }
 
 function useScore(segs) {
@@ -45,5 +61,6 @@ window.onload = function () {
 
 
 var config = {
-    path: ""
+    path: "",
+    currMapURL: ""
 }

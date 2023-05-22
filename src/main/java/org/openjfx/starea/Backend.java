@@ -123,8 +123,8 @@ public class Backend {
     }
 
     private static Pair<Double, Double> pix2latlon(int x, int y, int map_width, int map_height, double map_left, double map_right, double map_top, double map_bottom) {
-        double lon = ((map_right - map_left) * x) / map_width + map_left;
-        double lat = (map_height - y) * (map_top - map_bottom) / map_height + map_bottom;
+        double lon = ((map_right - map_left) * x) / ((double)map_width) + map_left;
+        double lat = (map_height - y) * (map_top - map_bottom) / ((double)map_height) + map_bottom;
 
         return new Pair(lat, lon);
     }
@@ -200,7 +200,9 @@ public class Backend {
             }
         }
 
-        return pix2latlon(minIndex % w, minIndex / w, w, h, left, left + 10, top, top - 10);
+        Pair<Double, Double> ret = pix2latlon(minIndex % w, minIndex / w, w, h, left, left + 10, top, top - 10);
+
+        return ret;
     }
 
     /**

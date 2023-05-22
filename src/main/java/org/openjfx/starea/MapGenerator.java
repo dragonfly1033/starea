@@ -10,8 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public final class MapGenerator {
+    private static String key = "";
     public static String generateMapImageURL(int width, int height, double currLat, double currLon, double targetLat, double targetLon) throws IOException {
         // Label Y is You, label T is Target
+
+        if (key == "") {
+            key = Files.readString(Paths.get("src/main/resources/org/openjfx/starea/key.txt"));
+        }
 
         String url = "https://maps.googleapis.com/maps/api/staticmap?" +
                 "center=" + currLat + "," + currLon +
@@ -19,7 +24,7 @@ public final class MapGenerator {
                 "&maptype=roadmap" +
                 "&markers=color:red|label:Y|" + currLat + "," + currLon +
                 "&markers=color:blue|label:T|" + targetLat + "," + targetLon +
-                "&key=AIzaSyCt3rLh_aV-YRwbOIpZ1fdx70iT4hxGktw" +
+                "&key=" + key +
                 "&style=feature:poi|element:labels|visibility:off";
 
         return url;
