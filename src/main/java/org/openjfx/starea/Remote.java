@@ -34,7 +34,7 @@ public class Remote {
     public int getScore(int day, int hour, double lat, double lon) throws Exception {
         System.out.print(day);
         System.out.println(hour);
-        return backend.getScore(day, hour, lat, lon);
+        return backend.getScoreNew(day, hour, lat, lon);
     }
 
     public int getScoreHere(int day, int hour) throws Exception {

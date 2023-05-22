@@ -31,6 +31,15 @@ public class Forecast {
         parseHourlyData(hourly);
     }
 
+    public Forecast(double lat, double lon) throws Exception {
+        JSONObject weatherJSON = getWeatherJSON(lat, lon);
+
+        JSONObject daily = weatherJSON.getJSONObject("daily");
+        JSONObject hourly = weatherJSON.getJSONObject("hourly");
+        parseDailyData(daily);
+        parseHourlyData(hourly);
+    }
+
     private String getIP() throws IOException {
         URL whatismyip = new URL("http://checkip.amazonaws.com");
 
@@ -56,6 +65,22 @@ public class Forecast {
                 "latitude=" + s_latitude + "&" +
                 "longitude=" + s_longitude + "&" +
                 "timezone=" + timezone;
+
+        JSONObject weather = curlJSON(url);
+        return weather;
+    }
+
+    private JSONObject getWeatherJSON(double lat, double lon) throws Exception {
+        latitude = lat;
+        longitude = lon;
+
+        String url = "https://api.open-meteo.com/v1/forecast?" +
+                "current_weather=true&" +
+                "daily=apparent_temperature_max,apparent_temperature_min,weathercode&" +
+                "hourly=is_day,temperature_2m,weathercode,cloudcover,visibility,precipitation_probability&" +
+                "latitude=" + lat + "&" +
+                "longitude=" + lon + "&" +
+                "timezone=" + "auto";
 
         JSONObject weather = curlJSON(url);
         return weather;

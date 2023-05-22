@@ -10,13 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public final class MapGenerator {
-    private static final File imagePath = new File("src/main/resources/org/openjfx/starea/map/map.png");
-    public static File generateNewMapImage(int width, int height, double currLat, double currLon, double targetLat, double targetLon) throws IOException {
+    public static String generateMapImageURL(int width, int height, double currLat, double currLon, double targetLat, double targetLon) throws IOException {
         // Label Y is You, label T is Target
-        if (imagePath.exists())
-        {
-            imagePath.delete();
-        }
 
         String url = "https://maps.googleapis.com/maps/api/staticmap?" +
                 "center=" + currLat + "," + currLon +
@@ -27,10 +22,7 @@ public final class MapGenerator {
                 "&key=AIzaSyCt3rLh_aV-YRwbOIpZ1fdx70iT4hxGktw" +
                 "&style=feature:poi|element:labels|visibility:off";
 
-        InputStream in = new URL(url).openStream();
-        Files.copy(in, Paths.get(imagePath.getPath()));
-
-        return imagePath;
+        return url;
     }
 
     public static String getMapsURL(double targetLat, double targetLon)

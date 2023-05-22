@@ -5,10 +5,10 @@ import javafx.util.Pair;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferUShort;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.function.Function;
 
 
 public class Backend {
@@ -24,6 +24,11 @@ public class Backend {
     public String map_html;
 
     public Backend() throws Exception {
+        var t = getLowestLightPollution(52.1988875,0.0787878, 5);
+        var score = getScoreNew(0, 22, t.getKey(), t.getValue());
+        System.out.println(score);
+        System.out.println(t.getKey() + "," + t.getValue());
+
         forecast = new Forecast();
         for (int i = 0; i < 168; i++) {
             int day = (int)Math.floor(i/24);
@@ -115,6 +120,13 @@ public class Backend {
         return new Pair(x, y);
     }
 
+    private static Pair<Double, Double> pix2latlon(int x, int y, int map_width, int map_height, double map_left, double map_right, double map_top, double map_bottom) {
+        double lon = ((map_right - map_left) * x) / map_width + map_left;
+        double lat = (map_height - y) * (map_top - map_bottom) / map_height + map_bottom;
+
+        return new Pair(lat, lon);
+    }
+
     /**
      * Gets the light pollution level at a latitude/longitude, from the light pollution map image.
      * @param lat the latitude of the location
@@ -137,6 +149,58 @@ public class Backend {
         return lightPollution;
     }
 
+    public static Pair<Double, Double> getLowestLightPollution(double lat, double lon, int radius) throws IOException {
+        Pair<String, Pair<Integer, Integer>> name = getImgName(lat, lon);
+        URL path = Backend.class.getResource("grid/"+name.getKey());
+        BufferedImage img = ImageIO.read(path);
+        int w = img.getWidth();
+        int h = img.getHeight();
+        DataBufferUShort buffer = (DataBufferUShort) img.getRaster().getDataBuffer();
+        short[] shortArray = buffer.getData();
+        double top = name.getValue().getKey();
+        double left = name.getValue().getValue();
+
+        var xy = latlon2pix(lat, lon, w, h, left, left + 10, top, top - 10);
+
+        int x = xy.getKey();
+        int y = xy.getValue();
+
+        int minValue = shortArray[x + y * w] & 0xffff;
+        int minIndex = x + y * w;
+        int minDist = radius * radius;
+
+        for (int radius_w = -radius; radius_w < radius; radius_w++)
+        {
+            for (int radius_h = -radius; radius_h < radius; radius_h++)
+            {
+                if (x + radius_w >= 0 && x + radius_w < w &&
+                        y + radius_h >= 0 && y + radius_h < h)
+                {
+                    int newIndex = x + radius_w + (y + radius_h) * w;
+                    int newVal = shortArray[newIndex] & 0xffff;
+                    int newDist = Math.abs(radius_w) + Math.abs(radius_h);
+
+                    if (newVal < minValue)
+                    {
+                        minIndex = newIndex;
+                        minValue = newVal;
+                        minDist = newDist;
+                    }
+                    else if (newVal == minValue)
+                    {
+                        if (newDist < minDist)
+                        {
+                            minIndex = newIndex;
+                            minDist = newDist;
+                        }
+                    }
+                }
+            }
+        }
+
+        return pix2latlon(minIndex % w, minIndex / w, w, h, left, left + 10, top, top - 10);
+    }
+
     /**
      * Calculate the stargazing score for a time at a position
      * @param day the day of the week index (today is 0, tomorrow is 1) of the location
@@ -146,11 +210,11 @@ public class Backend {
      * @return the stargazing score from 0 to 100
      * @throws Exception
      */
-    public int getScore(int day, int hour, double lat, double lon) throws Exception {
+    public int getScore(int day, int hour, double lat, double lon, Forecast forecastToUse) throws Exception {
         int index = day * 24 + hour;
-        if (forecast.hourlyData[index].getBoolean("isDay")) { return 0; }
-        double cloudCoverScore = Math.max(1-2*forecast.hourlyData[index].getInt("cloudCover"), 0.0);
-        double visibility = forecast.hourlyData[index].getInt("visibility")/24140.0;
+        if (forecastToUse.hourlyData[index].getBoolean("isDay")) { return 0; }
+        double cloudCoverScore = Math.max(1-2*forecastToUse.hourlyData[index].getInt("cloudCover"), 0.0);
+        double visibility = forecastToUse.hourlyData[index].getInt("visibility")/24140.0;
         double visibilityScore = (visibility < 0) ? 0 : Math.pow((visibility-0.8)/0.2, 2);
 
         double lightPol = lightPolCache.computeIfAbsent(String.valueOf(lat)+"_"+String.valueOf(lon),
@@ -169,8 +233,17 @@ public class Backend {
         else if (darkness <= 1.0) { lightPollutionScore = darkness * 148.75 - 147.75; }
 
         double score = (cloudCoverScore * 1.0 + visibilityScore * 1.0 + lightPollutionScore * 1.0)/3.0;
-        int rating = (int)Math.min(Math.max(Math.floor(score * 6), 0), 5);
+        int rating = (int)Math.min(Math. max(Math.floor(score * 6), 0), 5);
         return rating;
+    }
+
+    public int getScore(int day, int hour, double lat, double lon) throws Exception {
+        return getScore(day, hour, lat, lon, forecast);
+    }
+
+    public int getScoreNew(int day, int hour, double lat, double lon) throws Exception {
+        Forecast forecast_new = new Forecast(lat, lon);
+        return getScore(day, hour, lat, lon, forecast_new);
     }
 
     public static String getWeatherIcon(boolean isDay, int weatherCode)
