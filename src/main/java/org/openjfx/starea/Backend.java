@@ -24,10 +24,12 @@ public class Backend {
     public String map_html;
 
     public Backend() throws Exception {
-        var t = getLowestLightPollution(52.1988875,0.0787878, 5);
-        var score = getScoreNew(0, 22, t.getKey(), t.getValue());
-        System.out.println(score);
-        System.out.println(t.getKey() + "," + t.getValue());
+//        var t = getLowestLightPollution(52.1988875,0.0787878, 5);
+//        var score = getScoreNew(0, 22, t.getKey(), t.getValue());
+//        System.out.println(score);
+//        System.out.println(t.getKey() + "," + t.getValue());
+
+//        System.out.println(getClass().getResource("map.png"));
 
         forecast = new Forecast();
         for (int i = 0; i < 168; i++) {

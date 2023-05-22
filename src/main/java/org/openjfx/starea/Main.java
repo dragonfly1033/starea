@@ -80,7 +80,7 @@ class Browser extends Region {
             }
         );
 
-        webEngine.loadContent(backend.index_html, "text/html");
+        webEngine.loadContent(backend.map_html, "text/html");
         getChildren().add(browser);
     }
 
