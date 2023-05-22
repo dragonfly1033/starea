@@ -5,12 +5,13 @@
   /* fix height sizing issue with diff phones */
   text-align: center;
   color: #B0BEC5;
+  margin-top: 10%;
 }
 
 .map img {
-  height: 100%;
-  max-width: 50vh;
-  max-height: 70vw;
+  width: 100%;
+  max-width: min(98vw, 60vh);
+  max-height: min(98vw, 60vh);
   aspect-ratio: 1 / 1;
 }
 
