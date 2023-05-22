@@ -9,9 +9,19 @@
   <version>1.0-SNAPSHOT</version>
   <name>Starea</name>
 
+  <repositories>
+    <repository>
+      <id>maven-repo</id>
+      <name>the maven repo</name>
+      <url>https://mvnrepository.com</url>
+    </repository>
+  </repositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit.version>5.9.1</junit.version>      </properties>
+    <junit.version>5.9.1</junit.version>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -24,8 +34,14 @@
         <artifactId>javafx-controls</artifactId>
         <version>20-ea+4</version>
       </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-web</artifactId>
+        <version>20-ea+4</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
@@ -40,7 +56,7 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-web</artifactId>
-      <version>18.0.1</version>
+      <version>20-ea+4</version>
     </dependency>
     <dependency>
       <groupId>org.json</groupId>
