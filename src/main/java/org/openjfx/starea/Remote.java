@@ -1,12 +1,7 @@
 package org.openjfx.starea;
 
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
-import netscape.javascript.JSException;
-import netscape.javascript.JSObject;
 import org.json.JSONObject;
-
 
 
 public class Remote {
