@@ -24,12 +24,13 @@ import java.io.*;
 public class Main extends Application {
     private Scene scene;
     private static Backend backend;
-
+    private static Browser browser;
     private static Main main;
 
     @Override public void start(Stage stage) throws Exception {
         stage.setTitle("Starea");
-        scene = new Scene(new Browser(backend),375,667, Color.web("#555555"));
+        browser = new Browser(backend);
+        scene = new Scene(browser,375,667, Color.web("#555555"));
         stage.setScene(scene);
         stage.show();
         Main.main = this;
@@ -40,10 +41,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void showDocument(String url)
-    {
-        main.getHostServices().showDocument(url);
-    }
+    public static void showDocument(String url) { browser.webEngine.load(url); }
 }
 class Browser extends Region {
 
