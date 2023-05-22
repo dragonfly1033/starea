@@ -1,3 +1,7 @@
+/* CSS styling for Starea */
+
+/*Background colour and set font */
+
 body {
     color: #B0BEC5;
     font-family: sans-serif;
@@ -11,10 +15,8 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     padding: 5px;
-    position: absolute;
-    bottom: 10vh;
-    left: 0vh;
     width: calc(100% - 10px);
+    grid-area: hourly;
 }
 
 #hourlyDiv::-webkit-scrollbar {
@@ -23,12 +25,15 @@ body {
 
 .hourly {
     flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border-style: solid;
     border-color: #B0BEC5;
     border-width: 1px;
     border-right: 0px;
     text-align: center;
-    width: 88px;
+    width: 90px;
 }
 
 .hourly-rightmost {
@@ -63,6 +68,7 @@ body {
   background-color: #010130;
 }
 
+/* Container for the days */
 .day-group {
   display: inline-flex;
   width: 100%;
@@ -118,20 +124,20 @@ body {
 
 .grid-container {
   margin: 0;
-  display: grid; 
+  display: grid;
   width: 100%;
   height: 100%;
-  grid-auto-columns: 1fr; 
+  grid-auto-columns: 1fr;
   grid-auto-rows: min-content;
-  grid-template-columns: 1fr 1fr 1fr 6vh; 
-  grid-template-rows: 5vh 35vh 35vh 15vh 10vh; 
-  gap: 0px 0px; 
-  grid-template-areas: 
+  grid-template-columns: 1fr 1fr 1fr 6vh;
+  grid-template-rows: 5vh 35vh 35vh 15vh 10vh;
+  gap: 0px 0px;
+  grid-template-areas:
     "title title . map"
     "star star star star"
     "temps temps weather-icon weather-icon"
     "hourly hourly hourly hourly"
-    "days-grid days-grid days-grid days-grid"; 
+    "days-grid days-grid days-grid days-grid";
 }
 
 #title {
