@@ -16,8 +16,10 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     padding: 5px;
-    width: calc(100%);
-    grid-area: hourly;
+    position: absolute;
+    bottom: 10vh;
+    left: 0vh;
+    width: calc(100% - 10px);
 }
 
 #hourlyDiv::-webkit-scrollbar {
@@ -26,15 +28,12 @@ body {
 
 .hourly {
     flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     border-style: solid;
     border-color: #B0BEC5;
     border-width: 1px;
     border-right: 0px;
     text-align: center;
-    width: 90px;
+    width: 88px;
 }
 
 .hourly-rightmost {
@@ -108,7 +107,7 @@ body {
 
 /* Hover over button effects */
 .day:hover {
-  background: #e904ca;
+  background: #010130;
 }
 
 /* Shadow effect for which day is currently selected */
