@@ -167,6 +167,7 @@ public class Backend {
         int x = xy.getKey();
         int y = xy.getValue();
 
+        radius = (int)Math.round(radius / 0.895);
         int minValue = shortArray[x + y * w] & 0xffff;
         int minIndex = x + y * w;
         int minDist = radius * radius;
@@ -219,7 +220,8 @@ public class Backend {
         if (forecastToUse.hourlyData[index].getBoolean("isDay")) { return 0; }
         double cloudCoverScore = Math.max(1-2*forecastToUse.hourlyData[index].getInt("cloudCover"), 0.0);
         double visibility = forecastToUse.hourlyData[index].getInt("visibility")/24140.0;
-        double visibilityScore = (visibility < 0) ? 0 : Math.pow((visibility-0.8)/0.2, 2);
+        System.out.println(visibility);
+        double visibilityScore = (visibility < 0.8) ? 0 : Math.pow((visibility-0.8)/0.2, 2);
 
         double lightPol = lightPolCache.computeIfAbsent(String.valueOf(lat)+"_"+String.valueOf(lon),
             (x) -> {try {
@@ -236,7 +238,7 @@ public class Backend {
         else if (darkness <= 0.999) { lightPollutionScore = darkness * 15.65789 - 14.7910; }
         else if (darkness <= 1.0) { lightPollutionScore = darkness * 148.75 - 147.75; }
 
-        double score = (cloudCoverScore * 1.0 + visibilityScore * 1.0 + lightPollutionScore * 1.0)/3.0;
+        double score = Math.pow(cloudCoverScore * visibilityScore * lightPollutionScore, 1.0/3.0);
         int rating = (int)Math.min(Math. max(Math.floor(score * 6), 0), 5);
         return rating;
     }
