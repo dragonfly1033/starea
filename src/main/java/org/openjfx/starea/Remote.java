@@ -37,8 +37,6 @@ public class Remote {
     }
 
     public int getScoreHere(int day, int hour) throws Exception {
-        System.out.print(day);
-        System.out.println(hour);
         return backend.getScore(day, hour, backend.forecast.latitude, backend.forecast.longitude);
     }
 
@@ -54,7 +52,6 @@ public class Remote {
         JSONObject weather = new JSONObject();
         weather.put("daily", backend.forecast.dailyData);
         weather.put("hourly", backend.forecast.hourlyData);
-        System.out.println(weather);
         return weather.toString();
     }
 

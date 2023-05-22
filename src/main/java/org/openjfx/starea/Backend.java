@@ -220,7 +220,6 @@ public class Backend {
         if (forecastToUse.hourlyData[index].getBoolean("isDay")) { return 0; }
         double cloudCoverScore = Math.max(1-2*forecastToUse.hourlyData[index].getInt("cloudCover"), 0.0);
         double visibility = forecastToUse.hourlyData[index].getInt("visibility")/24140.0;
-        System.out.println(visibility);
         double visibilityScore = (visibility < 0.8) ? 0 : Math.pow((visibility-0.8)/0.2, 2);
 
         double lightPol = lightPolCache.computeIfAbsent(String.valueOf(lat)+"_"+String.valueOf(lon),
