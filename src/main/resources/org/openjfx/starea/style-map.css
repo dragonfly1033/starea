@@ -1,3 +1,6 @@
+/* CSS styling for Starea - Map Page */
+
+/* Div for the map image */
 .map {
   grid-area: map;
   width: 100%;
@@ -8,6 +11,7 @@
   margin-top: 10%;
 }
 
+/* Map image styling */
 .map img {
   width: 100%;
   max-width: min(98vw, 60vh);
@@ -16,14 +20,15 @@
   cursor: pointer;
 }
 
+/* Container class for the radius slider */
 .radslidecontainer {
     width: 100%; /* Width of the outside container */
     height: 100%; /* Height of the outside container */
     grid-area: radius;
     text-align: center;
-  }
+}
   
-  /* The slider itself */
+/* The slider itself */
 .radslider {
   -webkit-appearance: none;
   appearance: none;
@@ -38,6 +43,7 @@
   margin-top: 2vh;
 }
 
+/* Makes slider look nice instead of default */
 .radslider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -56,12 +62,13 @@
   cursor: pointer;
 }
 
+/* Text styling for "Radius XX km" */
 .radius {
     text-align: center;
     color: #B0BEC5;
 }
 
-/* Style buttons */
+/* Style home button */
 .home {
   grid-area: home;
   cursor: pointer; /* Mouse pointer on hover */
@@ -72,6 +79,7 @@
 	width: 100%;
 }
 
+/* Body formatting */
 body {
   color: #B0BEC5;
   font-family: sans-serif;
@@ -90,6 +98,7 @@ body {
 }
 /* CSS styling for Starea */
 
+/* The grid container for the map page */
 .grid-container {
 margin: 0;
 display: grid; 
@@ -98,9 +107,9 @@ height: 100%;
 grid-auto-columns: max-content; 
 grid-auto-rows: min-content;
 gap: 0vh 0px;
-grid-template-columns: 10vw 40vw 40vw 10vw;
+grid-template-columns: 10vw 40vw 40vw 10vw; /* Grid sizing */
 grid-template-rows: 5vh 15vh 70vh 10vh;
-grid-template-areas: 
+grid-template-areas: /* Layout of grid */
   "title title . home"
   "star star star star"
   ". map map ."
